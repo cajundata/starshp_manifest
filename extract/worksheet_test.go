@@ -27,7 +27,7 @@ const wsCapturedPanels = `
     <section class="captured-tab-panel" data-tab-label="Required B">
       <div class="jSheetParent"><table class="jSheet"><tbody>
         <tr><td class="rowHeader td-readOnly" id="0_table0_cell_c0_r0">Row label B</td>
-            <td class="responseCell" id="0_table0_cell_c1_r0"></td></tr>
+            <td class="dropDownList responseCell" id="0_table0_cell_c1_r0" dropdowntype="dropDown"></td></tr>
       </tbody></table></div>
     </section>
   </div>

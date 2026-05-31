@@ -49,14 +49,6 @@ func extractWorksheet(doc *goquery.Document) (any, *string, []string) {
 
 // parseTables parses every div.jSheetParent under root, accumulating a
 // dropdown-not-captured warning when a dropdown cell has no options.
-//
-// Two complementary checks cover both capture states:
-//  1. Cells that cells.ParseTable classifies as "dropdown" (has dropDownList
-//     class or dropdowntype attr) but have zero parsed options.
-//  2. Raw responseCell td elements that carry NO dropdown marker at all —
-//     these are dropdowns whose type annotation was never written because the
-//     entire cell was left uncaptured; they are identified by the absence of
-//     codex-captured-choices content.
 func parseTables(root *goquery.Selection, warns *[]string) []types.Table {
 	tables := []types.Table{}
 	root.Find(".jSheetParent").Each(func(_ int, p *goquery.Selection) {
@@ -68,15 +60,6 @@ func parseTables(root *goquery.Selection, warns *[]string) []types.Table {
 				}
 			}
 		}
-		// Also flag responseCell tds that have no dropdown markers at all (fully
-		// uncaptured dropdowns the typed path above never sees as "dropdown").
-		p.Find("td.responseCell").Each(func(_ int, td *goquery.Selection) {
-			isMarkedDropdown := td.HasClass("dropDownList") || td.AttrOr("dropdowntype", "") == "dropDown"
-			hasCapturedChoices := td.Find(".codex-captured-choices").Length() > 0
-			if !isMarkedDropdown && !hasCapturedChoices {
-				*warns = appendUnique(*warns, types.WarnDropdownNotCaptured)
-			}
-		})
 		tables = append(tables, tbl)
 	})
 	return tables
