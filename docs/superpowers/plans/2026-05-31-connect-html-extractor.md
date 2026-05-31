@@ -1001,8 +1001,18 @@ import (
 func extractMultipleChoice(doc *goquery.Document) (any, *string, []string) {
 	warns := []string{}
 
+	// The stem is in p.question; when the source HTML wraps an inner <p> (and/or a
+	// table), the HTML5 parser hoists those out as siblings, leaving p.question
+	// empty. Fall back to the next sibling <p> in that case (this also keeps an
+	// options-table out of the stem text).
+	stemSel := doc.Find("p.question").First()
+	stem := text.Normalize(stemSel.Text())
+	if stem == "" {
+		stem = text.Normalize(stemSel.Next().Text())
+	}
+
 	body := types.MultipleChoiceBody{
-		Stem:         text.Normalize(doc.Find("p.question").First().Text()),
+		Stem:         stem,
 		Choices:      []types.MCChoice{},
 		CorrectIndex: nil, // not recoverable from snapshots
 	}
