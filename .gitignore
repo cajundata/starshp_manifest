@@ -1,0 +1,21 @@
+# Sample/reference HTML (large, not source)
+.dev_references
+
+# Build output (root-level compiled binary only — not the cmd/manifest or manifest/ packages)
+/build
+/bin
+/manifest
+/manifest.exe
+
+# Extractor output
+/out
+
+# Go
+*.test
+*.out
+coverage.out
+vendor/
+
+# OS / editor
+.DS_Store
+Thumbs.db

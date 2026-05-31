@@ -77,7 +77,12 @@ Every input file produces one **Question envelope** wrapping a type-specific `bo
 ```jsonc
 {
   "schemaVersion": 1,
-  "source": { "path": "acct4421/mod02/mod02_001.html", "module": "mod02" },
+  "source": {
+    "path": "acct4421_gov-nonprof-acct/mod02/mod02_001.html",
+    "courseCode": "acct4421",   // first `acct\d{4}` segment in the path; null if absent (+ warning)
+    "courseName": "Governmental & Not-for-Profit Accounting", // mapped from slug; null if unmapped
+    "module": "mod02"           // module folder (mod01/mod02/…); null if not present in path
+  },
   "type": "multipleChoice" | "worksheet" | "matching" | "fillInTheBlank"
         | "trueFalse" | "multipleSelect" | "unknown",
   "title": "Item 1",            // best-available; see per-type fallbacks
@@ -86,6 +91,8 @@ Every input file produces one **Question envelope** wrapping a type-specific `bo
     "capturedTabCount": 2       // 0 = single panel / no tabs
   },
   "warnings": [],               // non-fatal: missing title, empty dropdowns, unknown classes, …
+  "tags": [],                   // RESERVED — always [] from the extractor; a later semantic-tagging
+                                // cycle populates it. Reserved now so old JSON never needs migration.
   "body": { /* one variant below */ }
 }
 ```
@@ -162,7 +169,8 @@ Every input file produces one **Question envelope** wrapping a type-specific `bo
   "generatedFrom": "<input root>",
   "count": 79,
   "questions": [
-    { "path": "acct4421/mod02/mod02_001.html", "module": "mod02",
+    { "path": "acct4421_gov-nonprof-acct/mod02/mod02_001.html",
+      "courseCode": "acct4421", "module": "mod02",
       "type": "worksheet", "title": null, "hasCapturedChoices": true, "warnings": 0 }
   ]
 }
@@ -171,6 +179,24 @@ Every input file produces one **Question envelope** wrapping a type-specific `bo
 **Schema rationale.** The `capture` block makes "was this snapshot complete?" a queryable fact.
 `warnings` keeps partial data flowing instead of failing a whole batch. `cellType` is normalized
 up front so renderers never re-sniff DOM classes. `unknown` guarantees no file is silently dropped.
+
+**Taxonomy vs. tags — two deliberately separate layers.** `source.courseCode`/`courseName`/`module`
+are **deterministic taxonomy** derived purely from the input path (the course folder *is* the
+subject, e.g. `acct4421_gov-nonprof-acct`). This is free, requires no guessing, and gives coarse
+subject/module filtering immediately. `tags[]` is a **reserved** slot for **semantic topic tags**
+("capital-asset disclosure", "revenue journal entries") — interpretive classification that cannot
+be parsed deterministically from markup. The extractor never populates `tags`; a separate later
+enrichment cycle (heuristic or LLM-assisted) reads the JSON and writes tags back. Reserving the
+field now means existing JSON never needs migration when that cycle ships. Keeping fuzzy
+classification out of the deterministic parser preserves "hard parsing happens once" and keeps both
+steps independently testable and trustworthy.
+
+**Taxonomy derivation rule.** Scan the file's path segments for the first match of `acct\d{4}`
+(optionally with a slug suffix, e.g. `acct4421_gov-nonprof-acct`) → `courseCode` = `acct4421`,
+`courseName` = looked up in a small built-in slug→display-name table (`null` if the slug is unmapped,
+so a new course degrades gracefully rather than failing). `module` = the first `mod\d+` segment.
+When no `acct\d{4}` segment exists (e.g. the flattened `.dev_references/` fixtures), all three are
+`null` and a `course-not-derivable` warning is emitted — never an error.
 
 ---
 
@@ -181,6 +207,7 @@ up front so renderers never re-sniff DOM classes. `unknown` guarantees no file i
 ```
 starshp_manifest/                 module: github.com/weldo/starshp_manifest
   types/         // envelope + variant structs (the schema) — the shared contract
+  taxonomy/      // path → courseCode/courseName/module derivation + slug→name table
   classify/      // the discriminator → question type
   extract/       // ExtractHTML(io.Reader, Source) (types.Question, Diagnostics) — pure, one doc
     worksheet.go
@@ -288,7 +315,11 @@ on intentional schema changes. This pins exact output for real Connect markup ag
   `rawClasses`.
 
 **Unit tests** for the fiddly bits: cell-type classification (`internal/cells`), the
-`awd-probe-type-` regex, title fallbacks, the table-source rule (captured-panels vs live iframe).
+`awd-probe-type-` regex, title fallbacks, the table-source rule (captured-panels vs live iframe),
+and **taxonomy derivation** (`taxonomy`) — table-driven cases for `acct4421_gov-nonprof-acct/mod02/…`
+→ `{acct4421, "Governmental & Not-for-Profit Accounting", mod02}`, an unmapped slug → `courseName:
+null`, and a path with no `acct####` segment → all-null + `course-not-derivable` warning (the
+flattened `.dev_references/` fixtures naturally exercise this last path).
 
 **Batch tests** use an in-memory `fstest.MapFS` (no disk) to verify tree-walk ordering, manifest
 aggregation, and that a deliberately-broken file degrades to `unknown` without aborting the batch.
@@ -303,6 +334,10 @@ real files."
 
 - Markdown renderer (separate JSON consumer).
 - Study-guide generator (separate JSON consumer).
+- **Semantic topic tagging** (populating `tags[]`) — its own enrichment cycle (heuristic or
+  LLM-assisted) that reads the per-file JSON and writes topic tags back. The schema reserves
+  `tags[]` now so this ships without migrating existing JSON. Deterministic course/module
+  taxonomy is *in* scope here; interpretive topic classification is not.
 - A Wails GUI for `manifest` and/or integration into `starshp` — the architecture leaves both open
   (library-first, standalone importable module), but no GUI code ships in v1.
 
