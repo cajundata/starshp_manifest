@@ -26,7 +26,7 @@ family ported but unverified). See the design spec and plan under
 One JSON **envelope** per HTML file (mirroring the input tree) plus a top-level **manifest**
 index listing every question. The envelope is a discriminated union over question type:
 
-- `multipleChoice` — stem + choices (correct answer not recoverable from snapshots)
+- `multipleChoice` — stem + choices; `correctIndex` is captured from graded snapshots, `null` for ungraded
 - `worksheet` — scenario, required items, per-tab jSheet tables with cells; dropdown cells carry
   their captured options and which option is correct
 - `matching` / `fillInTheBlank` / `trueFalse` / `multipleSelect` — ported for coverage, currently

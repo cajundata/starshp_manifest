@@ -20,9 +20,11 @@ func extractMultipleChoice(doc *goquery.Document) (any, *string, []string) {
 	}
 
 	body := types.MultipleChoiceBody{
-		Stem:         stem,
-		Choices:      []types.MCChoice{},
-		CorrectIndex: nil, // not recoverable from snapshots
+		Stem:    stem,
+		Choices: []types.MCChoice{},
+		// Stays nil for ungraded snapshots. Graded snapshots tag the correct
+		// option's .answer__span--mc with the "is-correct" class (see loop).
+		CorrectIndex: nil,
 	}
 
 	doc.Find("li.answer-wrap--mc").Each(func(i int, li *goquery.Selection) {
@@ -31,6 +33,13 @@ func extractMultipleChoice(doc *goquery.Document) (any, *string, []string) {
 			t = text.Normalize(li.Text())
 		}
 		body.Choices = append(body.Choices, types.MCChoice{Index: i, Text: t})
+
+		// Graded MC snapshots mark the correct option's span with "is-correct"
+		// (independent of which option the student selected). First match wins.
+		if body.CorrectIndex == nil && li.Find(".answer__span--mc").First().HasClass("is-correct") {
+			idx := i
+			body.CorrectIndex = &idx
+		}
 	})
 
 	title := titleOrWarn(doc, &warns)

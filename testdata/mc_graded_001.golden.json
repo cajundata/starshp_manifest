@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "path": "mc_graded_001.html",
+    "courseCode": null,
+    "courseName": null,
+    "module": null
+  },
+  "type": "multipleChoice",
+  "title": "Item 1",
+  "capture": {
+    "hasCapturedChoices": false,
+    "capturedTabCount": 0
+  },
+  "warnings": [
+    "course-not-derivable"
+  ],
+  "tags": [],
+  "body": {
+    "stem": "Governments and not-for-profit organizations have several characteristics that distinguish them from business organizations. Which of the following is one of those characteristics?",
+    "choices": [
+      {
+        "index": 0,
+        "text": "All of these characteristics."
+      },
+      {
+        "index": 1,
+        "text": "Ownership interest."
+      },
+      {
+        "index": 2,
+        "text": "Sources of revenue."
+      },
+      {
+        "index": 3,
+        "text": "Operating purpose."
+      }
+    ],
+    "correctIndex": 0
+  }
+}

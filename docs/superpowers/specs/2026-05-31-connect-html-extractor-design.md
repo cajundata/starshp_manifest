@@ -40,7 +40,10 @@ dropdown-capture fix. Verified structure:
   (`data-tab-label`, `data-captured-tab-count`).
 - **Worksheets are title-less** (no `h2.question__title`); MC titles fall back to
   `h1#question-info-holder.t-hidden` → "Item N".
-- **MC correctness is not recoverable** from snapshots (no checked/marked state).
+- **MC correctness is recoverable from _graded_ snapshots** (and only those): a graded page tags
+  the correct option's `div.answer__span--mc` with the class `is-correct` (plus a ✓ icon and a
+  hidden "Correct" label). Ungraded snapshots (e.g. `001.html`, "Check my work" still enabled)
+  carry no such marker, so `correctIndex` is `null` for them.
 
 Reusable from `domclean`: its batch/runner + file-ordering scaffolding and its `audit` tool
 (dump unknown CSS classes → handler backlog). Its text-only *converter* is **not** reused.
@@ -103,7 +106,7 @@ Every input file produces one **Question envelope** wrapping a type-specific `bo
 {
   "stem": "Governments and not-for-profit organizations have…",  // p.question (inner <p> unwrapped)
   "choices": [ { "index": 0, "text": "Option A" } ],             // li.answer-wrap--mc > p
-  "correctIndex": null   // NOT recoverable from snapshots — always null (documented ceiling)
+  "correctIndex": 0      // index of the option marked `is-correct` in GRADED snapshots; null when ungraded
 }
 // title fallback: h1#question-info-holder.t-hidden → "Item N"
 ```
@@ -272,7 +275,8 @@ discover → read → goquery.Parse → classify → dispatch to extractor
 
 - Stem from `p.question` (unwrap the nested inner `<p>`); choices from `li.answer-wrap--mc > p`
   (in document order, 0-indexed); title from `h1#question-info-holder.t-hidden` → "Item N".
-- `correctIndex` always `null` (ceiling).
+- `correctIndex`: index of the choice whose `div.answer__span--mc` has class `is-correct`
+  (graded snapshots); `null` when no option is marked (ungraded).
 
 ### DLC extractors (ported, unverified)
 
@@ -345,8 +349,10 @@ real files."
 
 ## 8. Known ceilings & risks
 
-- **MC correct answers are unrecoverable** from current snapshots (no marked state). `correctIndex`
-  stays `null` until/unless the capture is enhanced.
+- **MC correct answers are recoverable only from _graded_ snapshots** (`is-correct` marker).
+  Ungraded snapshots have no answer key in the DOM, so `correctIndex` is `null` for them — capture
+  the page after grading to populate it. (Originally mis-scoped as an absolute ceiling based on a
+  single ungraded sample; corrected in the MC-correctness follow-up.)
 - **DLC handlers are unverified** — no real examples exist; treat their output as best-effort.
 - **Worksheets without captured choices** (e.g. `004.html`) yield empty dropdown option lists by
   design; the `dropdown-options-not-captured` warning makes this explicit rather than silent.

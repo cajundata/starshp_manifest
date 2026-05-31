@@ -61,3 +61,27 @@ func TestExtractMultipleChoiceMissingTitle(t *testing.T) {
 		t.Errorf("warnings = %v, want [missing-title]", warns)
 	}
 }
+
+// Graded MC snapshots mark the correct option's .answer__span--mc with
+// "is-correct" (regardless of whether the student selected it). The second
+// choice is the correct one here.
+const mcGradedHTML = `
+<ul class="answers--mc">
+  <li class="answer-wrap--mc"><div class="answer__span--mc is-checked"><label class="answer__label--mc"><input type="radio"><p>Wrong choice</p></label></div></li>
+  <li class="answer-wrap--mc"><div class="answer__span--mc is-correct"><label class="answer__label--mc"><input type="radio"><p>Right choice</p><span class="t-hidden">Correct</span><span class="answer--is-correct" data-icon="✓"></span></label></div></li>
+  <li class="answer-wrap--mc"><div class="answer__span--mc"><label class="answer__label--mc"><input type="radio"><p>Another wrong</p></label></div></li>
+</ul>`
+
+func TestExtractMultipleChoiceGradedCorrectIndex(t *testing.T) {
+	body, _, _ := extractMultipleChoice(mustDoc(t, mcGradedHTML))
+	mc := body.(types.MultipleChoiceBody)
+	if mc.CorrectIndex == nil {
+		t.Fatalf("correctIndex should be set for a graded snapshot")
+	}
+	if *mc.CorrectIndex != 1 {
+		t.Errorf("correctIndex = %d, want 1", *mc.CorrectIndex)
+	}
+	if len(mc.Choices) != 3 {
+		t.Errorf("choices = %d, want 3", len(mc.Choices))
+	}
+}

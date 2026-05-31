@@ -21,6 +21,7 @@ func TestGolden(t *testing.T) {
 		wantType types.QuestionType
 	}{
 		{"mc_001", "../testdata/mc_001.html", "../testdata/mc_001.golden.json", types.TypeMultipleChoice},
+		{"mc_graded_001", "../testdata/mc_graded_001.html", "../testdata/mc_graded_001.golden.json", types.TypeMultipleChoice},
 		{"ws_005", "../testdata/ws_005.html", "../testdata/ws_005.golden.json", types.TypeWorksheet},
 	}
 	for _, c := range cases {
