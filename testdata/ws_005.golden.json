@@ -1,0 +1,656 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "path": "ws_005.html",
+    "courseCode": null,
+    "courseName": null,
+    "module": null
+  },
+  "type": "worksheet",
+  "title": null,
+  "capture": {
+    "hasCapturedChoices": true,
+    "capturedTabCount": 3
+  },
+  "warnings": [
+    "course-not-derivable"
+  ],
+  "tags": [],
+  "body": {
+    "scenario": "In the current year, the building occupied by Sunshine City’s Culture and Recreation Department suffered severe structural damage as a result of a hurricane. It had been 48 years since a hurricane had hit the Sunshine City area, although hurricanes in Sunshine City’s geographic area are not uncommon. The building had been purchased 10 years earlier at a cost of $2,000,000 and had accumulated depreciation of $500,000 as of the date of the hurricane. Based on a restoration cost analysis, city engineers estimate the impairment loss at $230,000; however, the city expects during the next fiscal year to receive insurance recoveries of $120,000 for the damage.",
+    "required": [
+      "Should the estimated impairment loss be reported as an unusual item? As an infrequent item?",
+      "Record the estimated impairment loss in the journal for governmental activities at the government-wide level.",
+      "How should the insurance recovery be reported in the following fiscal year?"
+    ],
+    "tabs": [
+      {
+        "label": "Required A",
+        "tables": [
+          {
+            "headers": [],
+            "rows": [
+              {
+                "label": "Should the estimated impairment loss be reported as an unusual item? As an infrequent item?",
+                "cells": [
+                  {
+                    "id": "0_table0_cell_c1_r0",
+                    "cellType": "dropdown",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": [
+                      {
+                        "index": 0,
+                        "text": "",
+                        "correct": false
+                      },
+                      {
+                        "index": 1,
+                        "text": "A special item",
+                        "correct": false
+                      },
+                      {
+                        "index": 2,
+                        "text": "An extraordinary item",
+                        "correct": false
+                      },
+                      {
+                        "index": 3,
+                        "text": "Infrequent item, disclosed in the notes to the financial statements",
+                        "correct": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Required B",
+        "tables": [
+          {
+            "headers": [
+              "Transaction",
+              "Governmental Activties",
+              "General Journal",
+              "Debit",
+              "Credit"
+            ],
+            "rows": [
+              {
+                "label": "",
+                "cells": [
+                  {
+                    "id": "0_table0_cell_c0_r1",
+                    "cellType": "input",
+                    "ariaLabel": "Transaction",
+                    "formula": null,
+                    "value": "1. Record the estimated impairment loss.",
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c1_r1",
+                    "cellType": "input",
+                    "ariaLabel": "Governmental Activties",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c2_r1",
+                    "cellType": "input",
+                    "ariaLabel": "General Journal",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c3_r1",
+                    "cellType": "input",
+                    "ariaLabel": "Debit",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c4_r1",
+                    "cellType": "input",
+                    "ariaLabel": "Credit",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  }
+                ]
+              },
+              {
+                "label": "",
+                "cells": [
+                  {
+                    "id": "0_table0_cell_c0_r2",
+                    "cellType": "input",
+                    "ariaLabel": "Transaction",
+                    "formula": null,
+                    "value": "1",
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c1_r2",
+                    "cellType": "input",
+                    "ariaLabel": "Governmental Activties",
+                    "formula": null,
+                    "value": "Governmental Activities",
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c2_r2",
+                    "cellType": "dropdown",
+                    "ariaLabel": "General Journal",
+                    "formula": null,
+                    "value": null,
+                    "options": [
+                      {
+                        "index": 0,
+                        "text": "",
+                        "correct": true
+                      },
+                      {
+                        "index": 1,
+                        "text": "No Journal Entry Required",
+                        "correct": false
+                      },
+                      {
+                        "index": 2,
+                        "text": "Accumulated Depreciation",
+                        "correct": false
+                      },
+                      {
+                        "index": 3,
+                        "text": "Appropriations",
+                        "correct": false
+                      },
+                      {
+                        "index": 4,
+                        "text": "Budgetary Fund Balance",
+                        "correct": false
+                      },
+                      {
+                        "index": 5,
+                        "text": "Buildings",
+                        "correct": false
+                      },
+                      {
+                        "index": 6,
+                        "text": "Cash",
+                        "correct": false
+                      },
+                      {
+                        "index": 7,
+                        "text": "Construction Expenditures",
+                        "correct": false
+                      },
+                      {
+                        "index": 8,
+                        "text": "Construction Work in Progress",
+                        "correct": false
+                      },
+                      {
+                        "index": 9,
+                        "text": "Estimated Revenues",
+                        "correct": false
+                      },
+                      {
+                        "index": 10,
+                        "text": "Expenditures",
+                        "correct": false
+                      },
+                      {
+                        "index": 11,
+                        "text": "Expenses—Culture and Recreation",
+                        "correct": false
+                      },
+                      {
+                        "index": 12,
+                        "text": "Gain on Sale of Machinery",
+                        "correct": false
+                      },
+                      {
+                        "index": 13,
+                        "text": "Interfund Transfers Out",
+                        "correct": false
+                      },
+                      {
+                        "index": 14,
+                        "text": "Land",
+                        "correct": false
+                      },
+                      {
+                        "index": 15,
+                        "text": "Loss on Sale of Machinery",
+                        "correct": false
+                      },
+                      {
+                        "index": 16,
+                        "text": "Machinery and Equipment",
+                        "correct": false
+                      },
+                      {
+                        "index": 17,
+                        "text": "Other Financing Sources",
+                        "correct": false
+                      },
+                      {
+                        "index": 18,
+                        "text": "Other Financing Uses—Interfund Transfer In",
+                        "correct": false
+                      },
+                      {
+                        "index": 19,
+                        "text": "Other Financing Uses—Proceeds of Refunding Bonds",
+                        "correct": false
+                      },
+                      {
+                        "index": 20,
+                        "text": "Program Revenues—Public Safety",
+                        "correct": false
+                      },
+                      {
+                        "index": 21,
+                        "text": "Revenues",
+                        "correct": false
+                      },
+                      {
+                        "index": 22,
+                        "text": "Vouchers Payable",
+                        "correct": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": "0_table0_cell_c3_r2",
+                    "cellType": "input",
+                    "ariaLabel": "Debit",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c4_r2",
+                    "cellType": "input",
+                    "ariaLabel": "Credit",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  }
+                ]
+              },
+              {
+                "label": "",
+                "cells": [
+                  {
+                    "id": "0_table0_cell_c0_r3",
+                    "cellType": "input",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c1_r3",
+                    "cellType": "input",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c2_r3",
+                    "cellType": "dropdown",
+                    "ariaLabel": "General Journal",
+                    "formula": null,
+                    "value": null,
+                    "options": [
+                      {
+                        "index": 0,
+                        "text": "",
+                        "correct": true
+                      },
+                      {
+                        "index": 1,
+                        "text": "No Journal Entry Required",
+                        "correct": false
+                      },
+                      {
+                        "index": 2,
+                        "text": "Accumulated Depreciation",
+                        "correct": false
+                      },
+                      {
+                        "index": 3,
+                        "text": "Appropriations",
+                        "correct": false
+                      },
+                      {
+                        "index": 4,
+                        "text": "Budgetary Fund Balance",
+                        "correct": false
+                      },
+                      {
+                        "index": 5,
+                        "text": "Buildings",
+                        "correct": false
+                      },
+                      {
+                        "index": 6,
+                        "text": "Cash",
+                        "correct": false
+                      },
+                      {
+                        "index": 7,
+                        "text": "Construction Expenditures",
+                        "correct": false
+                      },
+                      {
+                        "index": 8,
+                        "text": "Construction Work in Progress",
+                        "correct": false
+                      },
+                      {
+                        "index": 9,
+                        "text": "Estimated Revenues",
+                        "correct": false
+                      },
+                      {
+                        "index": 10,
+                        "text": "Expenditures",
+                        "correct": false
+                      },
+                      {
+                        "index": 11,
+                        "text": "Expenses—Culture and Recreation",
+                        "correct": false
+                      },
+                      {
+                        "index": 12,
+                        "text": "Gain on Sale of Machinery",
+                        "correct": false
+                      },
+                      {
+                        "index": 13,
+                        "text": "Interfund Transfers Out",
+                        "correct": false
+                      },
+                      {
+                        "index": 14,
+                        "text": "Land",
+                        "correct": false
+                      },
+                      {
+                        "index": 15,
+                        "text": "Loss on Sale of Machinery",
+                        "correct": false
+                      },
+                      {
+                        "index": 16,
+                        "text": "Machinery and Equipment",
+                        "correct": false
+                      },
+                      {
+                        "index": 17,
+                        "text": "Other Financing Sources",
+                        "correct": false
+                      },
+                      {
+                        "index": 18,
+                        "text": "Other Financing Uses—Interfund Transfer In",
+                        "correct": false
+                      },
+                      {
+                        "index": 19,
+                        "text": "Other Financing Uses—Proceeds of Refunding Bonds",
+                        "correct": false
+                      },
+                      {
+                        "index": 20,
+                        "text": "Program Revenues—Public Safety",
+                        "correct": false
+                      },
+                      {
+                        "index": 21,
+                        "text": "Revenues",
+                        "correct": false
+                      },
+                      {
+                        "index": 22,
+                        "text": "Vouchers Payable",
+                        "correct": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": "0_table0_cell_c3_r3",
+                    "cellType": "input",
+                    "ariaLabel": "Debit",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c4_r3",
+                    "cellType": "input",
+                    "ariaLabel": "Credit",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  }
+                ]
+              },
+              {
+                "label": "",
+                "cells": [
+                  {
+                    "id": "0_table0_cell_c0_r4",
+                    "cellType": "input",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c1_r4",
+                    "cellType": "input",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c2_r4",
+                    "cellType": "dropdown",
+                    "ariaLabel": "General Journal",
+                    "formula": null,
+                    "value": null,
+                    "options": [
+                      {
+                        "index": 0,
+                        "text": "",
+                        "correct": true
+                      },
+                      {
+                        "index": 1,
+                        "text": "No Journal Entry Required",
+                        "correct": false
+                      },
+                      {
+                        "index": 2,
+                        "text": "Accumulated Depreciation",
+                        "correct": false
+                      },
+                      {
+                        "index": 3,
+                        "text": "Appropriations",
+                        "correct": false
+                      },
+                      {
+                        "index": 4,
+                        "text": "Budgetary Fund Balance",
+                        "correct": false
+                      },
+                      {
+                        "index": 5,
+                        "text": "Buildings",
+                        "correct": false
+                      },
+                      {
+                        "index": 6,
+                        "text": "Cash",
+                        "correct": false
+                      },
+                      {
+                        "index": 7,
+                        "text": "Construction Expenditures",
+                        "correct": false
+                      },
+                      {
+                        "index": 8,
+                        "text": "Construction Work in Progress",
+                        "correct": false
+                      },
+                      {
+                        "index": 9,
+                        "text": "Estimated Revenues",
+                        "correct": false
+                      },
+                      {
+                        "index": 10,
+                        "text": "Expenditures",
+                        "correct": false
+                      },
+                      {
+                        "index": 11,
+                        "text": "Expenses—Culture and Recreation",
+                        "correct": false
+                      },
+                      {
+                        "index": 12,
+                        "text": "Gain on Sale of Machinery",
+                        "correct": false
+                      },
+                      {
+                        "index": 13,
+                        "text": "Interfund Transfers Out",
+                        "correct": false
+                      },
+                      {
+                        "index": 14,
+                        "text": "Land",
+                        "correct": false
+                      },
+                      {
+                        "index": 15,
+                        "text": "Loss on Sale of Machinery",
+                        "correct": false
+                      },
+                      {
+                        "index": 16,
+                        "text": "Machinery and Equipment",
+                        "correct": false
+                      },
+                      {
+                        "index": 17,
+                        "text": "Other Financing Sources",
+                        "correct": false
+                      },
+                      {
+                        "index": 18,
+                        "text": "Other Financing Uses—Interfund Transfer In",
+                        "correct": false
+                      },
+                      {
+                        "index": 19,
+                        "text": "Other Financing Uses—Proceeds of Refunding Bonds",
+                        "correct": false
+                      },
+                      {
+                        "index": 20,
+                        "text": "Program Revenues—Public Safety",
+                        "correct": false
+                      },
+                      {
+                        "index": 21,
+                        "text": "Revenues",
+                        "correct": false
+                      },
+                      {
+                        "index": 22,
+                        "text": "Vouchers Payable",
+                        "correct": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": "0_table0_cell_c3_r4",
+                    "cellType": "input",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  },
+                  {
+                    "id": "0_table0_cell_c4_r4",
+                    "cellType": "input",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Required C",
+        "tables": [
+          {
+            "headers": [],
+            "rows": [
+              {
+                "label": "How should the insurance recovery be reported in the following fiscal year?",
+                "cells": [
+                  {
+                    "id": "0_table0_cell_c1_r0",
+                    "cellType": "dropdown",
+                    "ariaLabel": "",
+                    "formula": null,
+                    "value": null,
+                    "options": [
+                      {
+                        "index": 0,
+                        "text": "",
+                        "correct": true
+                      },
+                      {
+                        "index": 1,
+                        "text": "Program revenue",
+                        "correct": false
+                      },
+                      {
+                        "index": 2,
+                        "text": "Service revenue",
+                        "correct": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

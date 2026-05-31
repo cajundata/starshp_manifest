@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "path": "mc_001.html",
+    "courseCode": null,
+    "courseName": null,
+    "module": null
+  },
+  "type": "multipleChoice",
+  "title": "Item 1",
+  "capture": {
+    "hasCapturedChoices": false,
+    "capturedTabCount": 0
+  },
+  "warnings": [
+    "course-not-derivable"
+  ],
+  "tags": [],
+  "body": {
+    "stem": "Four new 3D printers were purchased for use by the city clerk’s office using General Fund resources. The printers cost $15,500 each; the city’s capitalization threshold is $5,500. Which of the following entries would be required to record this transaction?",
+    "choices": [
+      {
+        "index": 0,
+        "text": "Option A"
+      },
+      {
+        "index": 1,
+        "text": "Option B"
+      },
+      {
+        "index": 2,
+        "text": "Option C"
+      },
+      {
+        "index": 3,
+        "text": "Option D"
+      }
+    ],
+    "correctIndex": null
+  }
+}

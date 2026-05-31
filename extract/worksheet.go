@@ -18,8 +18,18 @@ func extractWorksheet(doc *goquery.Document) (any, *string, []string) {
 		Tabs:     []types.Tab{},
 	}
 
-	doc.Find(".worksheet__main ol").First().Find("li").Each(func(_ int, li *goquery.Selection) {
-		if t := text.Normalize(li.Text()); t != "" {
+	doc.Find(".worksheet__main ol").First().Children().Filter("li").Each(func(_ int, li *goquery.Selection) {
+		// Prefer the first direct <span> child's text (real Connect HTML wraps
+		// requirement text in a <span> and may embed a large .replace-with-component
+		// subtree as a sibling). Fall back to full li.Text() for bare-text <li>s
+		// (synthetic fixtures and simpler question formats).
+		var t string
+		if firstSpan := li.Children().Filter("span").First(); firstSpan.Length() > 0 {
+			t = text.Normalize(firstSpan.Text())
+		} else {
+			t = text.Normalize(li.Text())
+		}
+		if t != "" {
 			body.Required = append(body.Required, t)
 		}
 	})
