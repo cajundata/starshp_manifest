@@ -351,6 +351,19 @@ real files."
 - **Worksheets without captured choices** (e.g. `004.html`) yield empty dropdown option lists by
   design; the `dropdown-options-not-captured` warning makes this explicit rather than silent.
 
+## Follow-ups (post-v1, non-blocking)
+
+- **Zero-value body-struct slices marshal as `null`.** Every current extractor path initializes
+  body slices (`Required`, `Tabs`, `Choices`, `Headers`, `Rows`, `Cells`, `Options`) to `[]T{}`,
+  so real output always uses `[]`. But the schema types have no built-in guard: a downstream
+  consumer that constructs a zero-value body struct directly would emit `null` for those fields,
+  violating the always-arrays contract. If/when external code starts building these types, add
+  custom `MarshalJSON` (or constructor helpers) on the body structs. Latent only — no current
+  code path is affected.
+- **Minor test-coverage gaps** flagged in final review: `cmd/manifest` glue (`dispatch`/`-o`
+  parsing/unknown-verb), `appendUnique` dedup branch, and a direct `cells.HasCapturedChoices`
+  unit test. Behavior is correct; these are regression-safety nets for future refactors.
+
 ---
 
 ## Reference paths
