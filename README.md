@@ -17,8 +17,9 @@ HTML parsing happens exactly once.
 
 ## Status
 
-Design complete; implementation not yet started. See the design spec:
-[`docs/superpowers/specs/2026-05-31-connect-html-extractor-design.md`](docs/superpowers/specs/2026-05-31-connect-html-extractor-design.md).
+v1 extractor implemented (MC + worksheet verified against real fixtures; DLC
+family ported but unverified). See the design spec and plan under
+`docs/superpowers/`.
 
 ## What it produces
 
@@ -46,12 +47,12 @@ embedding into `starshp` later. It is a standalone Go module so `starshp` can co
 Parsing uses [`goquery`](https://github.com/PuerkitoBio/goquery) over the fully-rendered static
 snapshots — no browser/Node DOM required.
 
-### CLI (planned)
+## Usage
 
-```
-manifest extract <inputDir> [-o outDir]   # per-file JSON + manifest index
-manifest plan    <inputDir>               # dry run: classify every file, print type breakdown
-manifest audit   <inputDir>               # dump unknown/unhandled CSS classes (handler backlog)
+```bash
+go run ./cmd/manifest extract path/to/saved/html -o path/to/output
+go run ./cmd/manifest plan   path/to/saved/html
+go run ./cmd/manifest audit  path/to/saved/html
 ```
 
 ## Sample data
