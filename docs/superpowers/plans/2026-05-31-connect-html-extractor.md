@@ -1199,8 +1199,19 @@ func extractWorksheet(doc *goquery.Document) (any, *string, []string) {
 		Tabs:     []types.Tab{},
 	}
 
-	doc.Find(".worksheet__main ol").First().Find("li").Each(func(_ int, li *goquery.Selection) {
-		if t := text.Normalize(li.Text()); t != "" {
+	// Direct-child <li> only: real Connect HTML embeds a large accounting-tool
+	// component (with its own nested <ul><li> option lists) inside a requirement
+	// <li>, so a recursive Find("li") would pull in 100+ noise items. Prefer the
+	// first direct <span> child's text; fall back to full li.Text() for
+	// bare-text <li>s (synthetic fixtures / simpler formats).
+	doc.Find(".worksheet__main ol").First().Children().Filter("li").Each(func(_ int, li *goquery.Selection) {
+		var t string
+		if firstSpan := li.Children().Filter("span").First(); firstSpan.Length() > 0 {
+			t = text.Normalize(firstSpan.Text())
+		} else {
+			t = text.Normalize(li.Text())
+		}
+		if t != "" {
 			body.Required = append(body.Required, t)
 		}
 	})
