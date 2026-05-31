@@ -94,8 +94,5 @@ func mergeWarn(taxWarn string, rest ...string) []string {
 		out = append(out, taxWarn)
 	}
 	out = append(out, rest...)
-	if out == nil {
-		return []string{}
-	}
 	return out
 }

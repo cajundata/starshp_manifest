@@ -1,6 +1,8 @@
 package extract
 
 import (
+	"strconv"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/cajundata/starshp_manifest/internal/text"
 	"github.com/cajundata/starshp_manifest/types"
@@ -23,7 +25,7 @@ func extractFillInTheBlank(doc *goquery.Document) (any, *string, []string) {
 	n := 0
 	prompt.Find(".fitb-input").Each(func(_ int, s *goquery.Selection) {
 		n++
-		s.ReplaceWithHtml(" [BLANK " + itoa(n) + "] ")
+		s.ReplaceWithHtml(" [BLANK " + strconv.Itoa(n) + "] ")
 	})
 	body := types.FillInTheBlankBody{PromptWithBlanks: text.Normalize(prompt.Text())}
 	return body, nil, []string{types.WarnDLCUnverified}
@@ -56,17 +58,4 @@ func choiceTexts(doc *goquery.Document) []string {
 		out = append(out, text.Normalize(s.Text()))
 	})
 	return out
-}
-
-func itoa(n int) string {
-	// small local helper to avoid importing strconv in this file
-	if n == 0 {
-		return "0"
-	}
-	digits := []byte{}
-	for n > 0 {
-		digits = append([]byte{byte('0' + n%10)}, digits...)
-		n /= 10
-	}
-	return string(digits)
 }

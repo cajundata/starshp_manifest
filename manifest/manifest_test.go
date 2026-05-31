@@ -22,7 +22,7 @@ func TestBuild(t *testing.T) {
 			Source:   types.Source{Path: "a/mod02/y.html"},
 			Type:     types.TypeWorksheet,
 			Capture:  types.Capture{HasCapturedChoices: true},
-			Warnings: []string{"dropdown-options-not-captured"},
+			Warnings: []string{types.WarnDropdownNotCaptured},
 		},
 	}
 	m := Build(qs, "a")
