@@ -1,0 +1,4 @@
+# Normalize all text files to LF in the repo and working tree (cross-platform).
+# Prevents core.autocrlf from materializing CRLF, which otherwise breaks the
+# byte-exact golden tests in extract/ on Windows checkouts.
+* text=auto eol=lf

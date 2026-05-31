@@ -5,6 +5,7 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/cajundata/starshp_manifest/types"
@@ -50,8 +51,14 @@ func TestGolden(t *testing.T) {
 			if err != nil {
 				t.Fatalf("read golden (run `go test ./extract -run TestGolden -update` first): %v", err)
 			}
-			if string(got) != string(want) {
-				t.Errorf("golden mismatch for %s. Run with -update if the change is intended.\n--- got ---\n%s", c.name, got)
+			// Normalize line endings before comparing: core.autocrlf can
+			// materialize the golden file with CRLF in the working tree, while
+			// json.MarshalIndent always emits LF. The comparison is on content,
+			// not line-ending style.
+			gotStr := strings.ReplaceAll(string(got), "\r\n", "\n")
+			wantStr := strings.ReplaceAll(string(want), "\r\n", "\n")
+			if gotStr != wantStr {
+				t.Errorf("golden mismatch for %s. Run with -update if the change is intended.\n--- got ---\n%s", c.name, gotStr)
 			}
 		})
 	}
