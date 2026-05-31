@@ -4,7 +4,6 @@
 # Build output (root-level compiled binary only — not the cmd/manifest or manifest/ packages)
 /build
 /bin
-/manifest
 /manifest.exe
 
 # Extractor output
