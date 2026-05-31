@@ -442,7 +442,11 @@ import (
 )
 
 var (
-	courseRe = regexp.MustCompile(`(?i)\bacct[_-]?(\d{4})\b`)
+	// NOTE: Go's RE2 \b is a \w/\W boundary, so `\bacct(\d{4})\b` fails when the
+	// digits are immediately followed by `_` (e.g. acct4421_gov-...): both `1` and
+	// `_` are word chars, so there is no boundary. Use explicit non-alpha/non-digit
+	// guards instead.
+	courseRe = regexp.MustCompile(`(?i)(?:^|[^a-zA-Z])acct[_-]?(\d{4})(?:[^0-9]|$)`)
 	moduleRe = regexp.MustCompile(`(?i)\b(mod\d+)\b`)
 )
 
