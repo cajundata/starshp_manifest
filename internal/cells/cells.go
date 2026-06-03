@@ -20,8 +20,11 @@ type parsedCell struct {
 	internal string // colHeader | rowHeader | dropdown | formula | input
 }
 
-// ParseTable converts one div.jSheetParent into a types.Table.
-func ParseTable(parent *goquery.Selection) types.Table {
+// ParseTable converts one div.jSheetParent into a types.Table. root is the
+// document-level selection used to resolve dropdown choices that newer captures
+// store outside the cell in a shared #codex-captured-choices-library; pass nil
+// when choices are inline (or absent).
+func ParseTable(parent *goquery.Selection, root *goquery.Selection) types.Table {
 	var pcs []parsedCell
 	parent.Find("td[id*='_cell_c']").Each(func(_ int, s *goquery.Selection) {
 		id, _ := s.Attr("id")
@@ -65,7 +68,7 @@ func ParseTable(parent *goquery.Selection) types.Table {
 				labelTaken = true
 				continue
 			}
-			row.Cells = append(row.Cells, buildCell(pc))
+			row.Cells = append(row.Cells, buildCell(pc, root))
 		}
 		tbl.Rows = append(tbl.Rows, row)
 	}
@@ -96,7 +99,7 @@ func internalType(s *goquery.Selection) string {
 	}
 }
 
-func buildCell(pc parsedCell) types.Cell {
+func buildCell(pc parsedCell, root *goquery.Selection) types.Cell {
 	id, _ := pc.sel.Attr("id")
 	c := types.Cell{
 		ID:        id,
@@ -109,7 +112,7 @@ func buildCell(pc parsedCell) types.Cell {
 	switch pc.internal {
 	case "dropdown":
 		c.CellType = "dropdown"
-		c.Options = parseOptions(pc.sel)
+		c.Options = parseOptions(pc.sel, root)
 		// dropdown cell .Text() would include option text; value stays nil.
 	case "formula":
 		c.CellType = "formula"
@@ -132,11 +135,22 @@ func textOrNil(s *goquery.Selection) *string {
 	return &v
 }
 
-// parseOptions reads ONLY the cell's own div.codex-captured-choices, ignoring any
-// duplicate live listbox (div.listContainer) elsewhere in the parent.
-func parseOptions(cell *goquery.Selection) []types.DropdownOption {
+// parseOptions reads the cell's captured dropdown choices. It prefers the cell's
+// own div.codex-captured-choices (older inline captures), ignoring any duplicate
+// live listbox (div.listContainer). When the cell has no inline choices, it falls
+// back to the shared #codex-captured-choices-library entry whose data-dropdownid
+// matches the cell's dropdownid (newer captures store choices there). Many cells
+// may share one dropdownid, so the same library entry can feed several cells.
+func parseOptions(cell, root *goquery.Selection) []types.DropdownOption {
+	choices := cell.Find(".codex-captured-choices")
+	if choices.Length() == 0 && root != nil {
+		if id := cell.AttrOr("dropdownid", ""); id != "" {
+			choices = root.Find(".codex-captured-choices[data-dropdownid='" + id + "']")
+		}
+	}
+
 	opts := []types.DropdownOption{}
-	cell.Find(".codex-captured-choices li[role='option']").Each(func(i int, li *goquery.Selection) {
+	choices.Find("li[role='option']").Each(func(i int, li *goquery.Selection) {
 		opts = append(opts, types.DropdownOption{
 			Index:   i,
 			Text:    text.Normalize(li.Find("a.list_content").Text()),

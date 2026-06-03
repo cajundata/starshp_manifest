@@ -42,7 +42,7 @@ func parentSel(t *testing.T, html string) *goquery.Selection {
 }
 
 func TestParseTableHeadersAndRows(t *testing.T) {
-	tbl := ParseTable(parentSel(t, sample))
+	tbl := ParseTable(parentSel(t, sample), nil)
 
 	if len(tbl.Headers) != 2 || tbl.Headers[0] != "" || tbl.Headers[1] != "Amount" {
 		t.Fatalf("headers = %#v, want [\"\" \"Amount\"]", tbl.Headers)
@@ -86,6 +86,79 @@ func TestParseTableHeadersAndRows(t *testing.T) {
 	}
 }
 
+// Newer Connect captures externalize dropdown choices into a shared
+// #codex-captured-choices-library, keyed by data-dropdownid; the cell only
+// carries a dropdownid reference and (at most) a live, empty listContainer.
+// Many cells share one dropdownid, so one library entry feeds them all.
+const externalLibrary = `
+<body>
+  <div class="jSheetParent">
+    <table class="jSheet">
+      <tbody>
+        <tr>
+          <td class="colHeader td-readOnly" id="0_table0_cell_c0_r0"></td>
+          <td class="colHeader td-readOnly" id="0_table0_cell_c1_r0">General Journal</td>
+        </tr>
+        <tr>
+          <td class="rowHeader td-readOnly" id="0_table0_cell_c0_r1">1</td>
+          <td class="dropDownList responseCell" id="0_table0_cell_c1_r1" dropdownid="4" dropdowntype="dropDown" aria-label="General Journal blank">
+            <div class="listContainer"><ul id="listbox-id"><li role="option"><a class="list_content">LIVE DUP</a></li></ul></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="codex-captured-choices-library">
+    <div class="codex-captured-choices" data-dropdownid="4">
+      <ul role="listbox">
+        <li role="option"><span class="answer_holder k"></span><a class="list_content"></a></li>
+        <li role="option"><span class="answer_holder"></span><a class="list_content">Cash</a></li>
+        <li role="option"><span class="answer_holder"></span><a class="list_content">Vouchers Payable</a></li>
+      </ul>
+    </div>
+    <div class="codex-captured-choices" data-dropdownid="99">
+      <ul role="listbox"><li role="option"><a class="list_content">WRONG LIBRARY ENTRY</a></li></ul>
+    </div>
+  </div>
+</body>`
+
+func TestParseTableExternalChoicesLibrary(t *testing.T) {
+	d, err := goquery.NewDocumentFromReader(strings.NewReader(externalLibrary))
+	if err != nil {
+		t.Fatal(err)
+	}
+	tbl := ParseTable(d.Find(".jSheetParent").First(), d.Selection)
+
+	if len(tbl.Rows) != 1 {
+		t.Fatalf("rows = %d, want 1", len(tbl.Rows))
+	}
+	cells := tbl.Rows[0].Cells
+	if len(cells) != 1 {
+		t.Fatalf("cells = %d, want 1", len(cells))
+	}
+	cell := cells[0]
+	if cell.CellType != "dropdown" {
+		t.Fatalf("cellType = %q, want dropdown", cell.CellType)
+	}
+	if len(cell.Options) != 3 {
+		t.Fatalf("options = %d, want 3 (resolved from external library by dropdownid)", len(cell.Options))
+	}
+	if cell.Options[0].Text != "" || !cell.Options[0].Correct {
+		t.Errorf("option0 = %#v, want empty+correct (k on blank, captured losslessly)", cell.Options[0])
+	}
+	if cell.Options[1].Text != "Cash" || cell.Options[2].Text != "Vouchers Payable" {
+		t.Errorf("options = %#v, want [_, Cash, Vouchers Payable]", cell.Options)
+	}
+	for _, o := range cell.Options {
+		if o.Text == "LIVE DUP" {
+			t.Fatal("leaked live listContainer option into captured choices")
+		}
+		if o.Text == "WRONG LIBRARY ENTRY" {
+			t.Fatal("matched the wrong library entry (data-dropdownid mismatch)")
+		}
+	}
+}
+
 const sampleInputFormula = `
 <div class="jSheetParent">
   <table class="jSheet">
@@ -110,7 +183,7 @@ const sampleInputFormula = `
 </div>`
 
 func TestParseTableInputFormulaAndMultiColumn(t *testing.T) {
-	tbl := ParseTable(parentSel(t, sampleInputFormula))
+	tbl := ParseTable(parentSel(t, sampleInputFormula), nil)
 
 	// --- headers (3 columns) ---
 	if len(tbl.Headers) != 3 {
