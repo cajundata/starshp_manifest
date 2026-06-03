@@ -34,11 +34,16 @@ func extractWorksheet(doc *goquery.Document) (any, *string, []string) {
 		}
 	})
 
+	// docRoot resolves dropdown choices stored outside the cell in the shared
+	// #codex-captured-choices-library (newer captures); it lives at document
+	// level, outside the per-tab panels/scopes below.
+	docRoot := doc.Selection
+
 	panels := doc.Find("#codex-captured-tab-panels section.captured-tab-panel")
 	if panels.Length() > 0 {
 		panels.Each(func(_ int, panel *goquery.Selection) {
 			label := text.Normalize(panel.AttrOr("data-tab-label", ""))
-			tab := types.Tab{Label: &label, Tables: parseTables(panel, &warns)}
+			tab := types.Tab{Label: &label, Tables: parseTables(panel, docRoot, &warns)}
 			body.Tabs = append(body.Tabs, tab)
 		})
 	} else {
@@ -46,7 +51,7 @@ func extractWorksheet(doc *goquery.Document) (any, *string, []string) {
 		if src.Length() == 0 {
 			src = doc.Find(".worksheet-wrap").First()
 		}
-		body.Tabs = append(body.Tabs, types.Tab{Label: nil, Tables: parseTables(src, &warns)})
+		body.Tabs = append(body.Tabs, types.Tab{Label: nil, Tables: parseTables(src, docRoot, &warns)})
 	}
 
 	// Worksheets normally have no title; only set when an explicit one exists.
@@ -57,12 +62,14 @@ func extractWorksheet(doc *goquery.Document) (any, *string, []string) {
 	return body, title, warns
 }
 
-// parseTables parses every div.jSheetParent under root, accumulating a
-// dropdown-not-captured warning when a dropdown cell has no options.
-func parseTables(root *goquery.Selection, warns *[]string) []types.Table {
+// parseTables parses every div.jSheetParent under scope, accumulating a
+// dropdown-not-captured warning when a dropdown cell has no options. docRoot is
+// the document-level selection passed through to resolve externally-stored
+// dropdown choices (see cells.ParseTable).
+func parseTables(scope, docRoot *goquery.Selection, warns *[]string) []types.Table {
 	tables := []types.Table{}
-	root.Find(".jSheetParent").Each(func(_ int, p *goquery.Selection) {
-		tbl := cells.ParseTable(p)
+	scope.Find(".jSheetParent").Each(func(_ int, p *goquery.Selection) {
+		tbl := cells.ParseTable(p, docRoot)
 		for _, row := range tbl.Rows {
 			for _, c := range row.Cells {
 				if c.CellType == "dropdown" && len(c.Options) == 0 {
