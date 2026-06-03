@@ -60,8 +60,26 @@ type MCChoice struct {
 
 type MultipleChoiceBody struct {
 	Stem         string     `json:"stem"`
+	StemTable    *StemTable `json:"stemTable,omitempty"`
 	Choices      []MCChoice `json:"choices"`
 	CorrectIndex *int       `json:"correctIndex"`
+}
+
+// StemTable is a faithful capture of a plain HTML <table> embedded in a question
+// stem (e.g. a list of balances). Unlike worksheet Table cells, these are static
+// display values, so each cell carries only its text.
+type StemTable struct {
+	Headers []string       `json:"headers"`
+	Rows    []StemTableRow `json:"rows"`
+}
+
+type StemTableRow struct {
+	Label string          `json:"label"`
+	Cells []StemTableCell `json:"cells"`
+}
+
+type StemTableCell struct {
+	Value string `json:"value"`
 }
 
 type DropdownOption struct {

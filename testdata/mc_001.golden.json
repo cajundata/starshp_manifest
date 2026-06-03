@@ -18,6 +18,274 @@
   "tags": [],
   "body": {
     "stem": "Four new 3D printers were purchased for use by the city clerk’s office using General Fund resources. The printers cost $15,500 each; the city’s capitalization threshold is $5,500. Which of the following entries would be required to record this transaction?",
+    "stemTable": {
+      "headers": [
+        "Option",
+        "General Journal",
+        "Debits",
+        "Credits"
+      ],
+      "rows": [
+        {
+          "label": "a.",
+          "cells": [
+            {
+              "value": "General Fund"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "a."
+            },
+            {
+              "value": "Equipment"
+            },
+            {
+              "value": "62,000"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "a."
+            },
+            {
+              "value": "Vouchers Payable"
+            },
+            {
+              "value": ""
+            },
+            {
+              "value": "62,000"
+            }
+          ]
+        },
+        {
+          "label": "b.",
+          "cells": [
+            {
+              "value": "Governmental Activities"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "b."
+            },
+            {
+              "value": "Expenses"
+            },
+            {
+              "value": "62,000"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "b."
+            },
+            {
+              "value": "Vouchers Payable"
+            },
+            {
+              "value": ""
+            },
+            {
+              "value": "62,000"
+            }
+          ]
+        },
+        {
+          "label": "c.",
+          "cells": [
+            {
+              "value": "General Fund"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "c."
+            },
+            {
+              "value": "Expenditures"
+            },
+            {
+              "value": "62,000"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "c."
+            },
+            {
+              "value": "Vouchers Payable"
+            },
+            {
+              "value": ""
+            },
+            {
+              "value": "62,000"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "c."
+            },
+            {
+              "value": "Governmental Activities"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "c."
+            },
+            {
+              "value": "Equipment"
+            },
+            {
+              "value": "62,000"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "c."
+            },
+            {
+              "value": "Vouchers Payable"
+            },
+            {
+              "value": ""
+            },
+            {
+              "value": "62,000"
+            }
+          ]
+        },
+        {
+          "label": "d.",
+          "cells": [
+            {
+              "value": "General Fund"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "d."
+            },
+            {
+              "value": "Equipment"
+            },
+            {
+              "value": "62,000"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "d."
+            },
+            {
+              "value": "Vouchers Payable"
+            },
+            {
+              "value": ""
+            },
+            {
+              "value": "62,000"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "d."
+            },
+            {
+              "value": "Governmental Activities"
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "d."
+            },
+            {
+              "value": "Equipment"
+            },
+            {
+              "value": "62,000"
+            },
+            {
+              "value": ""
+            }
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            {
+              "value": "d."
+            },
+            {
+              "value": "Vouchers Payable"
+            },
+            {
+              "value": ""
+            },
+            {
+              "value": "62,000"
+            }
+          ]
+        }
+      ]
+    },
     "choices": [
       {
         "index": 0,
